@@ -1,0 +1,135 @@
+/* Main form container — centered card layout */
+.inventory-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 24px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/* Shared styles for all inputs and selects inside the form */
+.inventory-form select,
+.inventory-form input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Submit button styling */
+.inventory-form button {
+    padding: 10px;
+    background-color: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.inventory-form button:hover {
+    background-color: #005bb5;
+}
+
+/* Disabled state for submit button — shown while request is in progress */
+.inventory-form button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+/* Each form field wrapper — stacks label, input, and error vertically */
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Label styling for form fields */
+.field label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Inline error text shown below invalid fields */
+.error {
+    color: #c0392b;
+    font-size: 12px;
+}
+
+/* Red border applied to inputs that failed validation */
+.inputError {
+    border: 1px solid #c0392b !important;
+    background-color: #fff5f5;
+}
+
+/* Banner for general errors shown at the top of the form */
+.errorBanner {
+    padding: 10px 14px;
+    background-color: #fdecea;
+    border: 1px solid #c0392b;
+    border-radius: 4px;
+    color: #c0392b;
+    font-size: 13px;
+}
+
+/* Confirmation card — shown after successful submission */
+.confirmation {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 24px;
+    border: 1px solid #4caf50;
+    border-radius: 8px;
+    background-color: #f0fff4;
+}
+
+.confirmation h2 {
+    color: #2e7d32;
+    margin-bottom: 8px;
+}
+
+/* Confirmation message text below the heading */
+.confirmMsg {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+/* Table that displays the submitted appliance details */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table th, .table td {
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.table th {
+    width: 45%;
+    color: #555;
+    font-weight: 600;
+}
+
+/* "Add Another Appliance" button on the confirmation screen */
+.resetBtn {
+    padding: 10px 20px;
+    background-color: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.resetBtn:hover {
+    background-color: #005bb5;
+}

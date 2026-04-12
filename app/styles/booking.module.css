@@ -1,0 +1,79 @@
+/* Main booking form container — centered card layout */
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 24px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/* Shared styles for select dropdowns and text inputs */
+.booking-form select,
+.booking-form input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Submit button styling */
+.booking-form button {
+    padding: 10px;
+    background-color: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.booking-form button:hover {
+    background-color: #005bb5;
+}
+
+/* Error text shown below invalid fields */
+.booking-form span {
+    color: #c0392b;
+    font-size: 12px;
+}
+
+/* Confirmation card — shown after successful booking */
+.confirmation {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 24px;
+    border: 1px solid #4caf50;
+    border-radius: 8px;
+    background-color: #f0fff4;
+}
+
+.confirmation h2 {
+    color: #2e7d32;
+    margin-bottom: 12px;
+}
+
+.confirmation p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* "Make new booking" button on the confirmation screen */
+.confirmation button {
+    margin-top: 16px;
+    padding: 10px 20px;
+    background-color: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.confirmation button:hover {
+    background-color: #005bb5;
+}
