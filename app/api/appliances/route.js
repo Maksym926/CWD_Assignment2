@@ -28,6 +28,7 @@ export async function POST(request) {
 
     }
     if (Object.keys(errors).length > 0) {
+        console.log("Validation errors:", errors);
         return Response.json(
             { success: false, errors, formData: stickData },
             { status: 400 }
@@ -35,7 +36,7 @@ export async function POST(request) {
     }
 
     const [existing] = await pool.query(
-        'SELECT ApplianceID FROM appliances WHERE SerialNumber = ?',
+        'SELECT ApplianceID FROM Appliance WHERE SerialNumber = ?',
         [stickData.serialNumber]
     );
 
@@ -47,7 +48,7 @@ export async function POST(request) {
     }
 
     const [users] = await pool.query(
-        'SELECT UserID FROM users WHERE Email = ?',
+        'SELECT UserID FROM User WHERE Email = ?',
         [stickData.email]
     );
 
@@ -75,7 +76,8 @@ export async function POST(request) {
         { success: true, data: { applianceId: appResult.insertId, userId } },
         { status: 201 }
     );
-  } catch {
+  } catch (error) {
+    console.log("Server error:", error.message);
     return Response.json(
         { success: false, errors: { general: "An error occurred. Please try again." } },
         { status: 500 }

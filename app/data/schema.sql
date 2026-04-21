@@ -1,6 +1,6 @@
 CREATE DATABASE IF NOT EXISTS appliance_inventory;
 USE appliance_inventory;
-CREATE DATABASE IF NOT EXISTS users(
+CREATE TABLE IF NOT EXISTS User (
     UserId INT AUTO_INCREMENT PRIMARY KEY,
     FirstName VARCHAR(50) NOT NULL,
     LastName VARCHAR(50) NOT NULL,
@@ -11,17 +11,17 @@ CREATE DATABASE IF NOT EXISTS users(
 
 );
 
-CREATE DATABASE IF NOT EXISTS appliances(
-    ApplianceID INT AUTO_INCREMENT PRIMARY KEY,
-    UserId INT NOT NULL,
-    ApplianceType VARCHAR(50) NOT NULL,
-    Brand VARCHAR(50) NOT NULL,
-    ModelNumber VARCHAR(12) NOT NULL,
-    SerialNumber VARCHAR(14) NOT NULL UNIQUE,
-    PurchaseDate DATE NOT NULL,
-    WarrantyExpirationDate DATE NOT NULL,
-    CostOfAppliance DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY(UserId)
-        REFERENCES users(UserId) ON DELETE CASCADE   
+    CREATE TABLE IF NOT EXISTS Appliance(
+        ApplianceID INT AUTO_INCREMENT PRIMARY KEY,
+        UserId INT NOT NULL,
+        ApplianceType VARCHAR(50) NOT NULL,
+        Brand VARCHAR(50) NOT NULL,
+        ModelNumber VARCHAR(12) NOT NULL,
+        SerialNumber VARCHAR(14) NOT NULL UNIQUE,
+        PurchaseDate DATE NOT NULL,
+        WarrantyExpirationDate DATE NOT NULL,
+        CostOfAppliance DECIMAL(10, 2) NOT NULL,
+        FOREIGN KEY(UserId)
+            REFERENCES users(UserId) ON DELETE CASCADE   
 
-);
+    );
