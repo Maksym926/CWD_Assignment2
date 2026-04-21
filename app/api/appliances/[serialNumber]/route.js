@@ -1,6 +1,6 @@
-import pool from '../../lib/db.js';
-import { validateFullRecord } from '../../lib/validation.js';
-import { sanitize } from '../../lib/sanitize.js';
+import pool from '../../../lib/db.js';
+import { validateFullRecord } from '../../../lib/validation.js';
+import { sanitize } from '../../../lib/sanitize.js';
 
 export async function GET(request, { params }) {
 
