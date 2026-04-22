@@ -68,6 +68,12 @@ export function validateInventory(data) {
   return errors;
 }
 
+export function validateSerial(value) {
+  if (!value) return "Serial number is required";
+  if (!SERIAL_REGEX.test(value)) return "Invalid serial number. Expected format: 0000-0000-0000";
+  return null;
+}
+
 export function validateFullRecord(data) {
   const errors = {};
 
