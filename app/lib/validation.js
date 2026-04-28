@@ -3,7 +3,7 @@ const MODEL_REGEX = /^\d{3}-\d{3}-\d{4}$/;
 const SERIAL_REGEX = /^\d{4}-\d{4}-\d{4}$/;
 const NAME_REGEX = /^[A-Za-z][A-Za-z' -]{1,49}$/;
 const ADDRESS_REGEX = /^[A-Za-z0-9][A-Za-z0-9 ,.\-#']{4,199}$/;
-const MOBILE_REGEX = /^08[3-9] \d{3} \d{4}$/;
+const MOBILE_REGEX = /^\+[1-9]\d{1,14}$/;
 const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 const BRAND_REGEX = /^[A-Za-z0-9][A-Za-z0-9 &\-]{1,49}$/;
 const COST_REGEX = /^\d{1,8}(\.\d{1,2})?$/;
@@ -90,7 +90,7 @@ export function validateFullRecord(data) {
   }
 
   if (!data.mobile || !MOBILE_REGEX.test(data.mobile)) {
-    errors.mobile = "Invalid mobile number. Expected format: 08X XXX XXXX";
+    errors.mobile = "Invalid mobile number. Expected format: +639505169923";
   }
 
   if (!data.email || !EMAIL_REGEX.test(data.email)) {
