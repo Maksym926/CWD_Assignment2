@@ -3,14 +3,17 @@ import { useState, useEffect } from "react";
 import useApplianceLookup from "../../hooks/useApplianceLookup";
 import { ALLOWED_TYPES, validateSerial } from "../../lib/validation";
 
+// Three-stage form: 1) lookup by serial, 2) edit pre-filled form, 3) success
 export default function UpdateForm() {
-    const [serial, setSerial] = useState("");
-    const [formData, setFormData] = useState(null);
+    const [serial, setSerial] = useState("");        // serial typed in Stage 1, also used for the PUT URL
+    const [formData, setFormData] = useState(null);  // editable copy of the appliance for Stage 2
     const [errors, setErrors] = useState({});
-    const [updated, setUpdated] = useState(false);
+    const [updated, setUpdated] = useState(false);   // flips true once PUT succeeds (Stage 3)
 
     const { result, notFound, loading, error, lookup, reset } = useApplianceLookup();
 
+    // After lookup() succeeds, copy DB record into editable formData
+    // DB uses PascalCase column names, the form uses camelCase, so we map field by field
     useEffect(() => {
         if (result) {
             setFormData({
@@ -24,6 +27,7 @@ export default function UpdateForm() {
                 brand: result.Brand || "",
                 modelNumber: result.ModelNumber || "",
                 serialNumber: result.SerialNumber || "",
+                // MySQL returns dates as ISO strings - slice to YYYY-MM-DD for <input type="date">
                 purchaseDate: result.PurchaseDate ? String(result.PurchaseDate).slice(0, 10) : "",
                 warrantyExpDate: result.WarrantyExpirationDate ? String(result.WarrantyExpirationDate).slice(0, 10) : "",
                 cost: result.CostOfAppliance != null ? String(result.CostOfAppliance) : "",
@@ -35,6 +39,7 @@ export default function UpdateForm() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
+    // Stage 1 submit: validate serial format client-side, then call the hook
     async function handleLookup(e) {
         e.preventDefault();
 
@@ -48,6 +53,7 @@ export default function UpdateForm() {
         await lookup(serial);
     }
 
+    // Stage 2 submit: send the edited form as a PUT to the server
     async function handleUpdate(e) {
         e.preventDefault();
 
@@ -63,6 +69,7 @@ export default function UpdateForm() {
             setUpdated(true);
             setErrors({});
         } else {
+            // Sticky form: server returns the sanitized formData on validation failure
             setErrors(json.errors || {});
             if (json.formData) setFormData(json.formData);
         }
@@ -238,6 +245,7 @@ export default function UpdateForm() {
 
                     <div className="mb-3">
                         <label className="form-label">Serial Number</label>
+                        {/* Serial number is the primary key - cannot be edited */}
                         <input
                             type="text"
                             name="serialNumber"

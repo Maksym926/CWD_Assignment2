@@ -4,13 +4,15 @@ import useApplianceLookup from "../../hooks/useApplianceLookup";
 import { validateSerial } from "../../lib/validation";
 import ApplianceDetails from "./ApplianceDetails";
 
+// Three-stage form: 1) lookup by serial, 2) confirm deletion, 3) success
 export default function DeleteForm() {
     const [serial, setSerial] = useState("");
     const [errors, setErrors] = useState({});
-    const [deleted, setDeleted] = useState(false);
+    const [deleted, setDeleted] = useState(false); // flips true once DELETE succeeds (Stage 3)
 
     const { result, notFound, loading, error, lookup, reset } = useApplianceLookup();
 
+    // Stage 1 submit: validate serial format client-side, then call the hook
     async function handleLookup(e) {
         e.preventDefault();
 
@@ -24,6 +26,7 @@ export default function DeleteForm() {
         await lookup(serial);
     }
 
+    // Stage 2 confirm: send DELETE request - no body needed, the URL identifies the row
     async function handleDelete() {
         const res = await fetch(`/api/appliances/${encodeURIComponent(serial)}`, {
             method: "DELETE",

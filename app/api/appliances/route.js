@@ -8,6 +8,7 @@ export async function POST(request) {
 
     const errors = validateFullRecord(body);
 
+    // Sanitize all fields to strip HTML/script tags before storing or echoing back
     const stickData = {
 
         applianceType: sanitize(body.applianceType),
@@ -27,6 +28,7 @@ export async function POST(request) {
         eircode: sanitize(body.eircode)
 
     }
+    // Return validation errors with sanitized formData so the form stays sticky
     if (Object.keys(errors).length > 0) {
         console.log("Validation errors:", errors);
         return Response.json(
@@ -35,6 +37,7 @@ export async function POST(request) {
         );
     }
 
+    // Reject duplicate serial numbers - SerialNumber is UNIQUE in the schema
     const [existing] = await pool.query(
         'SELECT ApplianceID FROM Appliance WHERE SerialNumber = ?',
         [stickData.serialNumber]
@@ -47,6 +50,7 @@ export async function POST(request) {
         );
     }
 
+    // Find or create the user by email (one user can own many appliances)
     const [users] = await pool.query(
         'SELECT UserID FROM User WHERE Email = ?',
         [stickData.email]
@@ -55,10 +59,10 @@ export async function POST(request) {
     let userId;
 
     if (users.length > 0) {
-        // Reuse existing user
+        // Reuse existing user - email already in DB
         userId = users[0].UserID;
     } else {
-        // Insert new user
+        // Insert new user and capture the auto-generated UserID
         const [userResult] = await pool.query(
             'INSERT INTO User (FirstName, LastName, Address, Mobile, Email, Eircode) VALUES (?, ?, ?, ?, ?, ?)',
             [stickData.firstName, stickData.lastName, stickData.address, stickData.mobile, stickData.email, stickData.eircode]
